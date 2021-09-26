@@ -1,19 +1,33 @@
 #include <iostream>
 
 using namespace std;
-
-class element
+class list
 {
-	int data;
-	element* pnext;
-	element* pprev;
-public:
-	element(int data = 0) : data(data), pnext(nullptr), pprev(nullptr){}
-	~element(){}
-	friend class list;
-};
-class list 
-{
+	class element
+	{
+		int data;
+		element* pnext;
+		element* pprev;
+	public:
+		element(int data = 0) : data(data), pnext(nullptr), pprev(nullptr) {}
+		~element() {}
+		friend class list;
+		class iterator
+		{
+			element* i;
+		public:
+			iterator(element* i = nullptr) : i(i) {};
+			~iterator() {}
+			iterator operator++() { i = i->pnext; }
+			iterator operator--() { i = i->pprev; }
+			bool operator ==(iterator* value)
+			{
+				if (this == value) return true;
+				else return false;
+			}
+			iterator operator *() { return *this; }
+		};
+	};
 	element* head;
 	element* tail;
 public:
@@ -35,13 +49,13 @@ public:
 		i->pnext = a;
 		a->pprev = i;
 		tail = a;
-	}		
+	}
 	void insert(int data, int index)
 	{
 		if (head == nullptr) return add_start(data);
 		if (index == 0) return add_start(data);
 		element* a = new element(data);
-		element* i = new element;
+		iterator* i = new iterator;
 		i = head;
 		for (int j = 0; j < index - 1; j++) i = i->pnext;
 		a->pnext = i->pnext;
@@ -52,7 +66,7 @@ public:
 	{
 		element* i = new element;
 		i = head;
-		for (int j = 0; j < index-1; j++) i = i->pnext;
+		for (int j = 0; j < index - 1; j++) i = i->pnext;
 		i->pnext = i->pnext->pnext;
 	}
 	void print()const
@@ -66,8 +80,8 @@ public:
 	{
 		element* i = new element;
 		i = tail;
-		for (i; i; i = i->pprev) 
-		cout << i->data << " ";
+		for (i; i; i = i->pprev)
+			cout << i->data << " ";
 	}
 };
 void main()
@@ -77,4 +91,5 @@ void main()
 	for (int i = 0; i < 5; i++) list1.add_end(rand() % 10);
 	list1.print();
 	list1.reverse_print();
-}
+}// Код будет работать без итератора, с итератором выдаёт ошибку
+//"отсуствует список аргументов для шаблон класса iterator"
