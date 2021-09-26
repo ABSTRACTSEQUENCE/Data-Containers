@@ -2,15 +2,16 @@
 #include <ctime>
 using namespace std;
 //#define DEBUG
+template<typename T>
 class list
 {
 	class element
 	{
-		int data;
+		T data;
 		element* pnext;
 		element* pprev;
 	public:
-		element(int data = 0, element* pnext = nullptr, element* pprev = nullptr)
+		element(T data = 0, element* pnext = nullptr, element* pprev = nullptr)
 			:data(data), pnext(pnext), pprev(pprev) {
 			cout << "EC " << this << endl;
 		}
@@ -85,9 +86,9 @@ public:
 		size = 0;
 		cout << "LC " << this << endl; //LC == list constructor
 	}
-	list(const initializer_list<int>& il) : list()
+	list(const initializer_list<T>& il) : list()
 	{
-		for (int const* it = il.begin(); it != il.end(); it++)
+		for (T const* it = il.begin(); it != il.end(); it++)
 		{
 			add_end(*it);
 		}
@@ -106,7 +107,7 @@ public:
 		cout << "LD " << this << endl; 
 	}
 	//operators
-	list& operator =(const list& other)
+	list<T>& operator =(const list<T>& other)
 	{
 		if (this == &other) return *this;
 		while (head)delete_start();
@@ -218,7 +219,7 @@ void main()
 		cout << *it << endl;	
 	}
 #endif
-	int arr[] = { 3,5,8,13,21 };
+//	int arr[] = { 3,5,8,13,21 };
 //	for (int i = 0; i < _countof(arr); i++) { cout << arr[i] << " "; }
 	/*for (int i : arr)
 	{
@@ -233,10 +234,12 @@ void main()
 	*/
 	double arr[] = { 3.5,5.8,8.8,13.2,21.9 };
 
-	list l = { 0,1,1,2,3,5,8,13,21 };
+	list<int> l = { 0,1,1,2,3,5,8,13,21 };
 	for (int i : l)
 	{
 		cout << i << "\t";
 	}
 	cout << endl;
 }
+
+//template <typename T>

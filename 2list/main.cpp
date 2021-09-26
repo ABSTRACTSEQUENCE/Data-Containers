@@ -51,8 +51,7 @@ public:
 		if (head == nullptr) return add_start(data);
 		if (index == 0) return add_start(data);
 		element* a = new element(data);
-		iterator* i = new iterator;
-		i = head;
+		element* i = head;
 		for (int j = 0; j < index - 1; j++) i = i->pnext;
 		a->pnext = i->pnext;
 		i->pnext = a;
