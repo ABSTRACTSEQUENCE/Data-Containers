@@ -206,6 +206,8 @@ void main()
 	list.print();
 	list.reverse_print();
 #endif
+//#define ITERATORS_CHECK
+#ifdef ITERATORS_CHECK
 	list list1 = { 3,5,8,13,21 };
 	list1.print();
 	//list list2 = list1; //copy constructor
@@ -215,4 +217,26 @@ void main()
 	{
 		cout << *it << endl;	
 	}
+#endif
+	int arr[] = { 3,5,8,13,21 };
+//	for (int i = 0; i < _countof(arr); i++) { cout << arr[i] << " "; }
+	/*for (int i : arr)
+	{
+		cout << i << "\t"; // Range based for работает только с контейнерами 
+	}*/
+	/*
+	* for(type i:container)
+	{
+		//i - iterator;
+
+	}
+	*/
+	double arr[] = { 3.5,5.8,8.8,13.2,21.9 };
+
+	list l = { 0,1,1,2,3,5,8,13,21 };
+	for (int i : l)
+	{
+		cout << i << "\t";
+	}
+	cout << endl;
 }

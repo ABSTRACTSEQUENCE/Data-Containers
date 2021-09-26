@@ -1,5 +1,4 @@
 #include <iostream>
-
 using namespace std;
 class list
 {
@@ -20,11 +19,8 @@ class list
 			~iterator() {}
 			iterator operator++() { i = i->pnext; }
 			iterator operator--() { i = i->pprev; }
-			bool operator ==(iterator* value)
-			{
-				if (this == value) return true;
-				else return false;
-			}
+			bool operator ==(const iterator& other) { return this->i == other.i; }
+			
 			iterator operator *() { return *this; }
 		};
 	};

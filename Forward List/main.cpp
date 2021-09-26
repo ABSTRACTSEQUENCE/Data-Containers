@@ -15,12 +15,31 @@ public:
 	}
 	friend class fwdlist;
 };
-int element::count = 0;
+//int element::count = 0;
 class fwdlist
 {
 	size_t size;
 	element* head; // голова списка указывает на начальный элемент списка (нулевой)
 public:
+	class iterator
+	{
+		element* i;
+	public:
+		iterator(element* i = nullptr) : i(i) { cout << "ITconstructor: \t" << this << endl; }
+		~iterator() { cout << "ITdestructor " << this << endl; }
+		iterator& operator++() { i = i->pnext; return *this; } // Это префиксный
+		iterator operator++(int) 
+		{ 
+			iterator old = *this; 
+			i = i->pnext;
+			return old;
+		} // Это постфиксный
+		bool operator = (const iterator& other) const { return this->i == other.i; }
+		bool operator!=(const iterator& other)const { return this->i != other.i; }
+		int& operator *() { return i->data; }
+	};
+	iterator begin() { return this->head; }
+	iterator end() { return nullptr; }
 	//default constructor создаёт пустой список
 	fwdlist() 
 	{
@@ -61,7 +80,7 @@ public:
 		New->pnext = head;
 		//3) Говорим что новый элемент теперь начальный элемент списка
 		head = New;
-		size++;
+		size++;// count++;
 	}
 	void push_back(int data)
 	{
@@ -70,18 +89,18 @@ public:
 		while (temp->pnext) { temp = temp->pnext; }
 		//element* New = new element(data);
 		temp->pnext = new element(data);
-		size++;
+		size++; //count++;
 	}
 	void insert(int index, int data)
 	{
 		if (index == 0) return push_front(data);
 		if (index >= size) return push_back(data);
 		element* temp = head;
-		for (int i = 0; i < index-1; i++)temp = temp->pnext;
+		for (int i = 0; i < index-1; i++) temp = temp->pnext;
 		element* New = new element(data);
 		New->pnext = temp->pnext;
 		temp->pnext = New;
-		size++;
+		size++; //count++;
 	}
 	//removing elements
 	void pop_front()
@@ -92,7 +111,7 @@ public:
 		head = head->pnext;
 		//3 Удаляем из памяти
 		delete del;
-		size--;
+		size--; //count--;
 	}
 	void pop_back()
 	{
@@ -103,7 +122,7 @@ public:
 		}
 		delete temp->pnext; //удаляем элемент из списка
 		temp->pnext = nullptr; //зануляем
-		size--;
+		size--;// count--;
 	}
 	void erase(int index)
 	{
@@ -111,7 +130,7 @@ public:
 		for (int i = 0; i < index; i++) temp = temp->pnext;
 		temp = nullptr;
 		delete temp;
-		size--;
+		size--; //count--;
 	}
 	//methods
 	void print()const
@@ -127,9 +146,9 @@ public:
 		for (element* temp = head; temp; temp = temp->pnext)
 		{
 			cout << "\nTemp adress: " << temp << "\tTemp value: " << temp->data << "\tNext adress: " << temp->pnext << endl;
+		}
 			cout << "\n------------List elements amount: " << size << "------------" << endl;
 			cout << "------------Total elements amount: " << element::count << "------------" << endl << endl;
-		}
 	}
 	void copy(int left, int right)const //left - индекс числа, которое копируем right - индекс куда копируем
 	{
@@ -138,6 +157,7 @@ public:
 };
 #define BASE_CHECK
 //#define COPY
+#define delimeter cout << "\n-------------------------------------------\n"
 void main()
 {
 	system("color 0A");
@@ -145,10 +165,8 @@ void main()
 #ifdef BASE_CHECK
 	fwdlist list;
 	int n; cout << "Value size: "; cin >> n;
-	//for (int i = 0; i < n; i++) { list.push_front(rand() % 100); }
-	for (int i = 0; i < n; i++) { list.push_back(rand() % 100); }
-	list.print();
-	
+	for (int i = 0; i < n; i++) { list.push_front(rand() % 100); }
+	//for (int i = 0; i < n; i++) { list.push_back(rand() % 100); }
 #endif
 #ifdef COPY
 	fwdlist list = { 3,5,8,13,21 };
@@ -156,5 +174,16 @@ void main()
 	fwdlist list1;
 	list1 = list;
 	list1.print();
+
 #endif
+	delimeter;
+	cout << "Range-based for:\n" << endl;
+	for (int i : list)
+	{
+		cout << i << "\t";
+	}
+	cout << endl;
+	delimeter;
+	cout << "Ordinary for:\n" << endl;
+	for (fwdlist::iterator it = list.begin(); it != list.end(); it++) { cout << *it << "\t"; }
 }
