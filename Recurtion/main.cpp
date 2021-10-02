@@ -8,34 +8,28 @@ using namespace std;
 	cout << endl;
 	elevator(level - 1);
 }*/
-int factorial(int value, int a = 1, int i = 1)
+int factorial(int value, int number = 1, int i = 1)
 {
-	if (i != value) 
-	{ 
-		a = a * i; 
-	return factorial(value, a, i + 1);
-	}					/*Почему-то после нескольких итераций происходит ошибка в расчётах		
-						т.е. он почему-то думает что 6 * 4 = 18
-						А ещё после того, как рекурсия отработала и условие if не соблюдалось и по логике он
-						должен был выполнить условие else и вернуться в main, он почему-то выполняет условие
-						else и возвращается к return, который в if, хотя он должен вообще игнорить if*/
-	else return a;
-}//UNDONE!
-int power(int a, int n, int i = 1)
-{
-	if (i != n) 
+	if (i != value)
 	{
-		a = a * a; 
-		return power(a, n, i + 1);
-	}								/*Тут тоже самое*/
-	else return a;
-	
-}//UNDONE
+		//number = number * i;
+		factorial(value, number * i, i + 1);  //пробовал написать этот код по-разному, но с 4 итерации он начинает записывать в number какую-то дичь (6 * 4 = 18)
+	}
+	else return number;
+}
+int power(int value, int powerr, int i = 0)
+{
+	if (i != powerr)
+	{
+		power(value * value, powerr, i + 1);  // тут то же самое, считает не правильно
+	}
+	else return value;
+}
+//UNDONE
 void main()
 {
 	/*int n;
 	cout << "LVL: "; cin >> n;
 	elevator(n);*/
-	cout << power(2, 5) << endl;
-	cout << factorial(5);
+	cout << power(5,6);
 }
