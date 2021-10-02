@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
-class element
+template <typename T>// После написания этой строки выходит 19 ошибок "Отсуствует список аргументов для шаблон класса"
+class element//Без строки template код работает
 {
 	static int count; //Статическая переменная является общей для всех объектов класса. Её можно проинициализировать только за классом
 	int data; //element value
@@ -14,7 +15,7 @@ public:
 		cout << "Edestrusct: \t" << this << endl; 
 	}
 	friend class fwdlist;
-};
+}; 
 //int element::count = 0;
 class fwdlist
 {
