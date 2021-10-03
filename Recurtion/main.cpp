@@ -8,28 +8,26 @@ using namespace std;
 	cout << endl;
 	elevator(level - 1);
 }*/
-int factorial(int value, int number = 1, int i = 1)
+#ifdef FACTORIAL
+int factorial(int n)
 {
-	if (i != value)
-	{
-		//number = number * i;
-		factorial(value, number * i, i + 1);  //пробовал написать этот код по-разному, но с 4 итерации он начинает записывать в number какую-то дичь (6 * 4 = 18)
-	}
-	else return number;
+	if (n == 0) return 1;
+	return n * factorial(n - 1);
+	//return n == 0 ? 1 : n * factorial(n - 1);
 }
-int power(int value, int powerr, int i = 0)
+#endif
+double power(double a, int n)
 {
-	if (i != powerr)
-	{
-		power(value * value, powerr, i + 1);  // тут то же самое, считает не правильно
-	}
-	else return value;
+	if (n == 0) return 1;
+	/*if (n > 0) return a * power(a, n - 1);
+	else return 1 / a * power(a, n + 1);*/
+	return n == 0 ? 1 : n > 0 ? a * power(a, n - 1) : 1 / a * power(a, n + 1);
 }
-//UNDONE
 void main()
 {
-	/*int n;
-	cout << "LVL: "; cin >> n;
-	elevator(n);*/
-	cout << power(5,6);
+	int a; int n;
+	cout << "Number: "; cin >> a;
+	cout << "Power: "; cin >> n;
+	cout << power(a, n) << endl;
+	main();
 }
