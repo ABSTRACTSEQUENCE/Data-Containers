@@ -1,14 +1,13 @@
 #include <iostream>
 using namespace std;
-template <typename T>
 class tree
 {
 	class element
 	{
-		T data;
+		int data;
 		element* pl; element* pr; //pl - left pr - right
 	public:
-		element(T data, element* pl = nullptr, element* pr = nullptr) :
+		element(int data = 0, element* pl = nullptr, element* pr = nullptr) :
 			data(data), pl(pl), pr(pr) {
 			cout << "E\t" << this << endl;
 		};
@@ -24,7 +23,7 @@ public:
 		cout << "T\t" << this << endl;
 	}
 	~tree() { cout << "~T\t" << this << endl; }
-	void add(T data, element* root)
+	void add(int data, element* root)
 		{
 			if (this->root == nullptr) { this->root = new element(data); return; }
 			if (root == nullptr) return;
@@ -46,17 +45,17 @@ public:
 		print(root->pl);
 		print(root->pr);
 	}
-	void min(element* root)const
+	int min(element* root)const
 	{
-		if (root == nullptr) return;
+		if (root == nullptr) return 0;
 		if (root->pl) min(root->pl);
-		else cout << endl << "Min value: " << root->data << endl;
+		return root->data;
 	}
-	void max(element* root)const
+	int max(element* root)const
 	{
-		if (root == nullptr) return;
+		if (root == nullptr) return 0;
 		if (root->pr) max(root ->pr);
-		else cout << endl << "Max value: " << root->data << endl;
+		return root->data;
 	}
 	int count(element* root)const
 	{
@@ -69,7 +68,7 @@ public:
 		}
 		return counter;
 	}
-	T sum(element* root)
+	int sum(element* root)
 	{
 		if (root == NULL)return 0;
 		if (count(root) == 1)return root->data;
@@ -86,7 +85,7 @@ public:
 		}
 		return summ;
 	}
-	T avg(element* root)
+	int avg(element* root)
 	{
 		return sum(root) / count(root);
 	}
@@ -101,5 +100,5 @@ void main()
 	oak.print(oak.get_root());
 	//cout << "\nAmount of elements: " << oak.count(oak.get_root()) << endl;
 	//cout << "\nSum: " << oak.sum(oak.get_root()) << endl;
-	cout << "\nAvg: " << oak.avg(oak.get_root());
+	cout << "\nAvg: " << oak.avg(oak.get_root()) << endl;
 }
